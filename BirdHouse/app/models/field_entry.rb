@@ -1,0 +1,2 @@
+class FieldEntry < ApplicationRecord
+end
