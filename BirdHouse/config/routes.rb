@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :bird_images
+  resources :badges
   resources :bird_entries
   resources :birds
   resources :images
