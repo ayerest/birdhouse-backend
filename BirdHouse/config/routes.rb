@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :bird_images
   resources :badges
   resources :bird_entries
-  resources :birds
+  get '/birds' => 'birds#index'
+
+  # resources :birds, except: [:index]
   resources :images
   resources :field_entries
   resources :users
