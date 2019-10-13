@@ -10,8 +10,16 @@
 # require 'pry'
 # require 'byebug'
 
+##drop users, field entries, images tables but don't drop the bird stuff
+BirdImage.destroy_all
+Image.destroy_all
+BirdEntry.destroy_all
+FieldEntry.destroy_all
+User.destroy_all
+# Bird.destroy_all
+
 10.times do
-    User.create(username: Faker::TvShows::BreakingBad.character, avatar: Faker::Avatar.image)
+    User.create(username: Faker::Games::ElderScrolls.first_name, password: "test", avatar: Faker::Avatar.image)
 end
 
 
@@ -30,23 +38,32 @@ page = mechanize.get("https://birdsna.org/Species-Account/bna/species")
 
 birdLinks = page.links_with(dom_class: "notranslate")
 
+# binding.pry
+
 ##note to self - instead of scraping everything, I could only scrape names and urls
 ##in that scenario I would need to perform a second scrape to get the bird data on a click
 
 if Bird.all.length == 0 
     birdLinks.each do |link|
+        category = link.node.parent.parent.parent.children[1].children.children.text
+
         birdPage = link.click
         common_name = birdPage.search("h1.notranslate").text
         species_name = birdPage.search("h4.notranslate").text
         img_url = birdPage.image.src
         # region = birdPage.search("img.RangeMap-image")[0].attributes["src"].value
-        region = birdPage.images[1].src
+        range_map = birdPage.images[1].src
         if !!birdPage.link_with(dom_class: "Button Button--large Button--listen")
             birdcall = birdPage.link_with(dom_class: "Button Button--large Button--listen").href
         end
-        characteristics = birdPage.search("#overview p").text.split("\n").join("").split("\t").join("")
-        ##rename region to range map, rename characteristics to bird information
+        details = birdPage.search("#overview p").text.split("\n").join("").split("\t")
+        .join("")
+        ##
+        ##category
+        ## family
+        # family =  link.node.parent.parent.parent.attributes["id"].value --> too technical for kids probably
+        ##rename region to range map, rename characteristics to details
 
-        Bird.create(common_name: common_name, species_name: species_name, img_url: img_url, region: region, birdcall: birdcall, characteristics: characteristics)
+        Bird.create(common_name: common_name, species_name: species_name, img_url: img_url, range_map: range_map, birdcall: birdcall, details: details, category: category)
     end
 end

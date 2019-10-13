@@ -1,7 +1,24 @@
 class BirdsController < ApplicationController
+    ##get request to display categories on birdodex
+    def get_categories
+        categories = Bird.get_categories
+        # byebug
+        render :json => categories
+    end
+
+    #post request to grab birds in a particular category
+    def show_birds
+        test = get_params
+        category = params[:category]
+        birds = Bird.get_birds_in_category(category)
+        # byebug
+        render :json => birds
+    end
+    
     def index
+        # byebug
         birds = Bird.all 
-        render :json => birds ``
+        render :json => birds
     end
 
     def show
@@ -10,5 +27,11 @@ class BirdsController < ApplicationController
     end
 
     ##shouldn't need other controller actions for birds
+
+    private
+
+    def get_params
+        params.permit(:user, :category)
+    end
 
 end

@@ -4,8 +4,9 @@ class CreateBirds < ActiveRecord::Migration[5.2]
       t.string :common_name
       t.string :species_name
       t.string :img_url
-      t.string :region
-      t.string :characteristics
+      t.string :range_map
+      t.string :details
+      t.string :category
       t.string :birdcall
 
       t.timestamps
