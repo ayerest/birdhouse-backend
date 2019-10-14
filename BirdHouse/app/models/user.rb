@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
     def my_birds
         self.bird_entries.collect do |bird_entry|
-            bird_entry.birds
-        end
+            bird_entry.bird
+        end.uniq
     end
 end

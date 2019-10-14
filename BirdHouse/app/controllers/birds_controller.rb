@@ -2,7 +2,6 @@ class BirdsController < ApplicationController
     ##get request to display categories on birdodex
     def get_categories
         categories = Bird.get_categories
-        # byebug
         render :json => categories
     end
 
@@ -11,12 +10,11 @@ class BirdsController < ApplicationController
         test = get_params
         category = params[:category]
         birds = Bird.get_birds_in_category(category)
-        # byebug
+        
         render :json => birds
     end
     
     def index
-        # byebug
         birds = Bird.all 
         render :json => birds
     end
