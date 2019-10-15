@@ -1,4 +1,13 @@
 class ImagesController < ApplicationController
+
+    def get_my_photos
+        user = User.find((params[:user][:id]))
+        # byebug
+        images = user.images
+        # byebug
+        render :json => images
+    end
+
     def index
         images = Image.all
         render :json => images
@@ -7,9 +16,9 @@ class ImagesController < ApplicationController
     def new
     end
 
-    def create
-        #stuff goes here
-    end
+    # def create
+    #     #stuff goes here
+    # end
 
     ##no edit/update feature
 

@@ -1,3 +1,3 @@
 class FieldEntrySerializer < ActiveModel::Serializer
-  attributes :id, :notes, :date, :latitude, :longitude, :bird_entries, :birds, :user, :images, :bird_images
+  attributes :id, :notes, :date, :latitude, :longitude, :bird_entries, :birds, :user, :images
 end

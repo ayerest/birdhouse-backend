@@ -8,8 +8,11 @@ class BadgesController < ApplicationController
     def new
     end
 
-    def create
-        ##stuff goes here
+    def get_my_badges
+        user = User.find((params[:user][:id]))
+        badges = user.badges
+        # byebug
+        render :json => badges
     end
 
     def show 

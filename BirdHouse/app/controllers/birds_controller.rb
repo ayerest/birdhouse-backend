@@ -10,13 +10,15 @@ class BirdsController < ApplicationController
         test = get_params
         category = params[:category]
         birds = Bird.get_birds_in_category(category)
-        
+        birds = birds.map do |bird|
+            {common_name: bird.common_name, species_name: bird.species_name, img_url: bird.img_url, id: bird.id, birdcall: bird.birdcall}
+        end
         render :json => birds
     end
     
     def index
         birds = Bird.all 
-        render :json => birds
+        render :json => birds, except: [:details, :range_map]
     end
 
     def show

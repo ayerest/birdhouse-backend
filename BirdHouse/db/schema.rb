@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_10_09_003223) do
   enable_extension "plpgsql"
 
   create_table "badges", force: :cascade do |t|
-    t.string "type"
+    t.string "category"
     t.bigint "user_id"
     t.string "medal"
     t.datetime "created_at", null: false
