@@ -35,7 +35,7 @@ class FieldEntriesController < ApplicationController
             end
         end
         
-        byebug
+        # byebug
         render :json => field_entry
     end
 
