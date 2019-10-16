@@ -2,9 +2,7 @@ class ImagesController < ApplicationController
 
     def get_my_photos
         user = User.find((params[:user][:id]))
-        # byebug
         images = user.images
-        # byebug
         render :json => images
     end
 
