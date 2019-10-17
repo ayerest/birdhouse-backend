@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :username
       t.string :password_digest
       t.string :avatar
+      t.integer :step_count, :default => 0
 
       t.timestamps
     end

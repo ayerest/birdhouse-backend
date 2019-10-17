@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2019_10_09_003223) do
     t.string "username"
     t.string "password_digest"
     t.string "avatar"
+    t.integer "step_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

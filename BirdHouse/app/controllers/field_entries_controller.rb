@@ -9,6 +9,7 @@ class FieldEntriesController < ApplicationController
     end
 
     def create
+        ##to create a steps badge the user would probably need to have the number of steps stored on their instance, on logout? or on badges page load that number would need to be sent from the store to update the user 
         user = User.find((params[:user][:id]))
         field_entry = FieldEntry.create(notes: get_params[:notes], user: user, date: get_params[:date], latitude: get_params[:latitude], longitude: get_params[:longitude])
         image = Image.create(img_url: params[:image], field_entry: field_entry)
@@ -17,20 +18,38 @@ class FieldEntriesController < ApplicationController
         badge_categories = user.badges.map do |badge|
             badge.category
         end
-        if !badge_categories.include?("Sightings") && user.field_entries.length > 1 && user.field_entries.length < 5
-            Badge.create(category: "Sightings", medal: "Bronze", user: user)
-        elsif !badge_categories.include?("Birds") && user.my_birds.length > 1 && user.my_birds.length < 5
-            Badge.create(category: "Birds", medal: "Bronze", user: user)
+
+        if !badge_categories.include?("Sightings")
+            if user.field_entries.length > 1 && user.field_entries.length < 5
+                Badge.create(category: "Sightings", medal: "Bronze", user: user)
+            elsif user.field_entries.length >= 5 && user.field_entries.length < 10
+                Badge.create(category: "Sightings", medal: "Silver", user: user)
+            elsif user.field_entries.length >= 10
+                Badge.create(category: "Sightings", medal: "Gold", user: user)
+            end
+        end
+        
+        if !badge_categories.include?("Birds")
+            if user.my_birds.length > 1 && user.my_birds.length < 5
+                Badge.create(category: "Birds", medal: "Bronze", user: user)
+            elsif user.my_birds.length >=5 && user.my_birds.length < 10
+                Badge.create(category: "Birds", medal: "Silver", user: user)
+            elsif user.my_birds.length >=10
+                Badge.create(category: "Birds", medal: "Gold", user: user)
+            end
         end
 
         user.badges.each do |badge|
             if badge.category == "Sightings" && (badge.medal == "Bronze" && (user.field_entries.length >= 5 && user.field_entries.length < 10))
                 badge.update(medal: "Silver")
-            elsif badge.category == "Sightings" && (badge.medal == "Silver" && user.field_entries.length >= 10)
+            end
+            if badge.category == "Sightings" && (badge.medal == "Silver" && user.field_entries.length >= 10)
                 badge.update(medal: "Gold")
-            elsif badge.category == "Birds" && (badge.medal == "Bronze" && (user.my_birds.length >= 5 && user.my_birds.length < 10))
+            end
+            if badge.category == "Birds" && (badge.medal == "Bronze" && (user.my_birds.length >= 5 && user.my_birds.length < 10))
                 badge.update(medal: "Silver")
-            elsif badge.category == "Birds" && (badge.medal == "Silver" && user.my_birds.length >= 10)
+            end
+            if badge.category == "Birds" && (badge.medal == "Silver" && user.my_birds.length >= 10)
                 badge.update(medal: "Gold")
             end
         end
