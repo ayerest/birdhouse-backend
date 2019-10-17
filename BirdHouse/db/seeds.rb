@@ -56,8 +56,7 @@ if Bird.all.length == 0
         if !!birdPage.link_with(dom_class: "Button Button--large Button--listen")
             birdcall = birdPage.link_with(dom_class: "Button Button--large Button--listen").href
         end
-        details = birdPage.search("#overview p").text.split("\n").join("").split("\t")
-        .join("")
+        details = birdPage.search("#overview p").text
         ##
         ##category
         ## family

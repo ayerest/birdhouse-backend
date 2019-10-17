@@ -17,5 +17,7 @@ Rails.application.routes.draw do
   post '/bird_images', to: 'bird_images#get_my_birds'
   post '/badges', to: 'badges#get_my_badges'
   post '/images', to: 'images#get_my_photos'
+  post '/steps', to: 'steps#get_my_steps'
+  patch '/steps', to: 'steps#update_steps'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
