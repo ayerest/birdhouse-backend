@@ -11,10 +11,9 @@ class FieldEntriesController < ApplicationController
     def create
         ##to create a steps badge the user would probably need to have the number of steps stored on their instance, on logout? or on badges page load that number would need to be sent from the store to update the user 
         user = User.find((params[:user][:id]))
-        field_entry = FieldEntry.create(notes: get_params[:notes], user: user, date: get_params[:date], latitude: get_params[:latitude], longitude: get_params[:longitude])
-        image = Image.create(img_url: params[:image], field_entry: field_entry)
         bird = Bird.find((params[:bird][:id]))
-        field_entry.birds << bird
+        field_entry = FieldEntry.create(notes: get_params[:notes], user: user, bird: bird, date: get_params[:date], latitude: get_params[:latitude], longitude: get_params[:longitude], share: get_params[:share])
+        image = Image.create(img_url: params[:image], field_entry: field_entry)
         badge_categories = user.badges.map do |badge|
             badge.category
         end
@@ -76,7 +75,7 @@ class FieldEntriesController < ApplicationController
     private
 
     def get_params
-        params.require(:field_entry).permit(:notes, :date, :latitude, :longitude, :image, :user)
+        params.require(:field_entry).permit(:notes, :date, :latitude, :longitude, :image, :user, :share)
     end
 
     

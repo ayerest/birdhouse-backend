@@ -11,6 +11,8 @@ class BadgesController < ApplicationController
     def get_my_badges
         user = User.find((params[:user][:id]))
         badges = user.badges
+        # steps = params[:steps]
+        # user.update(step_count: user.step_count + steps)
         # byebug
         render :json => badges
     end

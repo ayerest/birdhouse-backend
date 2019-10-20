@@ -4,6 +4,29 @@ class AuthController < ApplicationController
         @user = User.find_by(username: user_login_params[:username])
         if @user && @user.authenticate(user_login_params[:password])
             token = encode_token({user_id: @user.id})
+            if !!@user.last_login
+                if @user.last_login + 7.days > Time.now
+                    if !@user.badges.include?("Login")
+                        Badge.create(category: "Login", medal: "Bronze", user: @user)
+                    else
+                        @user.badges.map do |badge|
+                            if @user.badge.category == "Login" && @user.badge.medal == "Bronze"
+                                if badge.created_at + 7.days < Time.now
+                                    badge.update(medal: "Silver")
+                                end
+                            elsif @user.badge.category == "Login" && @user.badge.medal == "Silver"
+                                if badge.created_at + 7.days < Time.now
+                                    badge.update(medal: "Gold")
+                                end
+                            end
+                        end
+                    end
+                end
+            else
+                @user.update(last_login: Time.now)
+            end
+
+            # @user.update(last_login: Time.now)
             render json: {user: UserSerializer.new(@user), jwt: token}, status: :accepted
         else
             render json: {message: "Invalid username or password"}, status: :unauthorized

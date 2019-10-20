@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.create(username: user_params[:username], password: user_params[:password], avatar: user_params[:avatar])
+        @user = User.create(username: user_params[:username], password: user_params[:password], avatar: user_params[:avatar], last_login: Time.now)
 
         if @user.valid?
             @token = encode_token({user_id: @user.id})

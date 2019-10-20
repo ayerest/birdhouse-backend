@@ -24,15 +24,6 @@ ActiveRecord::Schema.define(version: 2019_10_09_003223) do
     t.index ["user_id"], name: "index_badges_on_user_id"
   end
 
-  create_table "bird_entries", force: :cascade do |t|
-    t.bigint "bird_id"
-    t.bigint "field_entry_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["bird_id"], name: "index_bird_entries_on_bird_id"
-    t.index ["field_entry_id"], name: "index_bird_entries_on_field_entry_id"
-  end
-
   create_table "bird_images", force: :cascade do |t|
     t.bigint "bird_id"
     t.bigint "image_id"
@@ -50,6 +41,8 @@ ActiveRecord::Schema.define(version: 2019_10_09_003223) do
     t.string "details"
     t.string "category"
     t.string "birdcall"
+    t.string "quick_info"
+    t.string "citation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -57,11 +50,15 @@ ActiveRecord::Schema.define(version: 2019_10_09_003223) do
   create_table "field_entries", force: :cascade do |t|
     t.text "notes"
     t.bigint "user_id"
+    t.bigint "bird_id"
+    t.boolean "share"
+    t.boolean "uncertain"
     t.datetime "date"
     t.float "latitude"
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["bird_id"], name: "index_field_entries_on_bird_id"
     t.index ["user_id"], name: "index_field_entries_on_user_id"
   end
 
@@ -78,16 +75,16 @@ ActiveRecord::Schema.define(version: 2019_10_09_003223) do
     t.string "username"
     t.string "password_digest"
     t.string "avatar"
+    t.datetime "last_login"
     t.integer "step_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "badges", "users"
-  add_foreign_key "bird_entries", "birds"
-  add_foreign_key "bird_entries", "field_entries"
   add_foreign_key "bird_images", "birds"
   add_foreign_key "bird_images", "images"
+  add_foreign_key "field_entries", "birds"
   add_foreign_key "field_entries", "users"
   add_foreign_key "images", "field_entries"
 end

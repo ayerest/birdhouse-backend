@@ -8,6 +8,8 @@ class CreateBirds < ActiveRecord::Migration[5.2]
       t.string :details
       t.string :category
       t.string :birdcall
+      t.string :quick_info
+      t.string :citation
 
       t.timestamps
     end
