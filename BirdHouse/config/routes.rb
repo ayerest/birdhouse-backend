@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   post '/steps', to: 'steps#get_my_steps'
   post '/my_steps', to: 'my_steps#update_steps'
   post '/shared_entries', to: 'shared_entries#get_shared_entries'
+  post '/push_token', to: 'push_token#push_token'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

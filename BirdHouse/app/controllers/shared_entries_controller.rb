@@ -5,6 +5,7 @@ class SharedEntriesController < ApplicationController
         user = User.find((params[:user][:id]))
  
         shared_entries = FieldEntry.filter_public()
+        # byebug
         if shared_entries.length > 0
             shared_entries = shared_entries.select do |entry|
                 entry.date > (Time.now - 24.hours)

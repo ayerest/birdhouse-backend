@@ -14,7 +14,7 @@ class Bird < ApplicationRecord
     def self.get_birds_in_category(category)
         Bird.all.select do |bird|
             bird.category == category
-        end
+        end.sort
     end
 
     def self.filter_birds(searchTerm)
