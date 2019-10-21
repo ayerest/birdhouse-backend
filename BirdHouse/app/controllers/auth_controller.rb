@@ -5,16 +5,19 @@ class AuthController < ApplicationController
         if @user && @user.authenticate(user_login_params[:password])
             token = encode_token({user_id: @user.id})
             if !!@user.last_login
+                badges = @user.badges.map do |badge|
+                    badge.category
+                end
                 if @user.last_login + 7.days > Time.now
-                    if !@user.badges.include?("Login")
+                    if !badges.include?("Login")
                         Badge.create(category: "Login", medal: "Bronze", user: @user)
                     else
                         @user.badges.map do |badge|
-                            if @user.badge.category == "Login" && @user.badge.medal == "Bronze"
+                            if badge.category == "Login" && badge.medal == "Bronze"
                                 if badge.created_at + 7.days < Time.now
                                     badge.update(medal: "Silver")
                                 end
-                            elsif @user.badge.category == "Login" && @user.badge.medal == "Silver"
+                            elsif badge.category == "Login" && badge.medal == "Silver"
                                 if badge.created_at + 7.days < Time.now
                                     badge.update(medal: "Gold")
                                 end

@@ -8,7 +8,7 @@ class Bird < ApplicationRecord
     def self.get_categories 
         Bird.all.map do |bird|
             bird.category
-        end.uniq
+        end.uniq.sort
     end
 
     def self.get_birds_in_category(category)
