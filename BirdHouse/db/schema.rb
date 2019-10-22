@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2019_10_09_003223) do
     t.string "category"
     t.string "birdcall"
     t.string "quick_info"
+    t.string "img_citation"
     t.string "citation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

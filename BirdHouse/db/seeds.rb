@@ -42,26 +42,29 @@ if Bird.all.length == 0
         common_name = birdPage.search("h1.notranslate").text
         species_name = birdPage.search("h4.notranslate").text
         img_url = birdPage.image.src
-        citation = birdPage.search("ul.InlineList").children.text.split("\n\t").join(" ").split("\t").join("").strip.split("   ").join(" ")
+        img_citation = birdPage.search("ul.InlineList").children.text.split("\n\t").join(" ").split("\t").join("").strip.split("   ").join(" ")
         # binding.pry
         # region = birdPage.search("img.RangeMap-image")[0].attributes["src"].value
         range_map = birdPage.images[1].src
         if !!birdPage.link_with(dom_class: "Button Button--large Button--listen")
             birdcall = birdPage.link_with(dom_class: "Button Button--large Button--listen").href
         end
-        details = birdPage.search("#overview p").text
+        details = birdPage.search("#overview p").map do |p|
+            p.text.split("\n\t\n\t\tClose\n\t\n").join("").split("\n\t").join("")
+        end
         quick_info = ""
         if birdPage.search("p.Figure-caption")[1]
             quick_info = birdPage.search("p.Figure-caption")[1].text + " "
         end
+        citation = birdPage.search("cite.Citation-body").text.strip
         ##
         ##category
         ## family
         # family =  link.node.parent.parent.parent.attributes["id"].value --> too technical for kids probably
         ##rename region to range map, rename characteristics to details
-        
+        # binding.pry
 
-        Bird.create(common_name: common_name, species_name: species_name, img_url: img_url, range_map: range_map, birdcall: birdcall, details: details, category: category, quick_info: quick_info, citation: citation)
+        Bird.create(common_name: common_name, species_name: species_name, img_url: img_url, range_map: range_map, birdcall: birdcall, details: details, category: category, quick_info: quick_info, img_citation: img_citation, citation: citation)
     end
 end
 30.times do
