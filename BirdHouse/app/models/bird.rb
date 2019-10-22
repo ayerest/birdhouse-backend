@@ -14,7 +14,7 @@ class Bird < ApplicationRecord
     def self.get_birds_in_category(category)
         Bird.all.select do |bird|
             bird.category == category
-        end.sort
+        end
     end
 
     def self.filter_birds(searchTerm)
@@ -23,7 +23,7 @@ class Bird < ApplicationRecord
         end
         by_keyword = Bird.all.select do |bird|
             bird.details.downcase.include?(searchTerm.downcase) || bird.quick_info.downcase.include?(searchTerm.downcase)
-        end
+        end.sort
         return by_name + by_keyword
     end
 

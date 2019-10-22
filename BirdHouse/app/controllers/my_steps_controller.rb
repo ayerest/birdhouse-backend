@@ -10,7 +10,9 @@ class MyStepsController < ApplicationController
         user = User.find((params[:user][:id]))
         steps = params[:steps]
         # byebug
-        user.update(step_count: (user.step_count + steps), last_login: Time.now)
+        if !(user.last_login + 24.hours > Time.now)
+            user.update(step_count: (user.step_count + steps), last_login: Time.now)
+        end
 
         badge_categories = user.badges.map do |badge|
             badge.category

@@ -8,6 +8,7 @@ class AuthController < ApplicationController
                 badges = @user.badges.map do |badge|
                     badge.category
                 end
+                
                 if @user.last_login + 7.days > Time.now
                     if !badges.include?("Login")
                         Badge.create(category: "Login", medal: "Bronze", user: @user)

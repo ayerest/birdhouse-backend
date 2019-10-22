@@ -7,6 +7,6 @@ class User < ApplicationRecord
     has_secure_password
 
     def my_birds
-        self.birds
+        self.birds.sort
     end
 end
