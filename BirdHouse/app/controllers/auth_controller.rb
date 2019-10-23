@@ -26,8 +26,6 @@ class AuthController < ApplicationController
                         end
                     end
                 end
-            else
-                @user.update(last_login: Time.now)
             end
 
             # @user.update(last_login: Time.now)
