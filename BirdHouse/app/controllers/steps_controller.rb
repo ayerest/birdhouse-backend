@@ -9,7 +9,7 @@ class StepsController < ApplicationController
     def update_steps
         user = User.find((params[:user][:id]))
         steps = params[:steps]
-        byebug
+        
         user.update(step_count: (user.step_count + steps))
 
         badge_categories = user.badges.map do |badge|
@@ -34,7 +34,7 @@ class StepsController < ApplicationController
                 badge.update(medal: "Gold")
             end
         end
-        byebug
+        
         render :json => {newSteps: steps, totalSteps: user.step_count}
     end
 end

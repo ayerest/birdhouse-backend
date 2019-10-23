@@ -23,8 +23,23 @@ Bird.destroy_all
 end
 
 
-
 mechanize = Mechanize.new
+
+factPage = mechanize.get('https://www.birdwatchersdigest.com/youngbirders/coolbirdfacts')
+
+facts = factPage.search("div.step p")
+
+facts.each do |fact|
+    Factoid.create(fact: fact.text)
+end
+
+otherFactPage = mechanize.get('https://www.mspca.org/pet_resources/interesting-facts-about-birds/')
+
+otherFacts = otherFactPage.search("div.moduleL3Content p")
+
+otherFacts.each do |fact|
+    Factoid.create(fact: fact.text)
+end
 
 page = mechanize.get("https://birdsna.org/Species-Account/bna/species")
 
@@ -52,6 +67,7 @@ if Bird.all.length == 0
         details = birdPage.search("#overview p").map do |p|
             p.text.split("\n\t\n\t\tClose\n\t\n").join("").split("\n\t").join("")
         end
+        details = details.join("!PARAGRAPH!")
         quick_info = ""
         if birdPage.search("p.Figure-caption")[1]
             quick_info = birdPage.search("p.Figure-caption")[1].text + " "
@@ -67,11 +83,16 @@ if Bird.all.length == 0
         Bird.create(common_name: common_name, species_name: species_name, img_url: img_url, range_map: range_map, birdcall: birdcall, details: details, category: category, quick_info: quick_info, img_citation: img_citation, citation: citation)
     end
 end
+
 30.times do
-    FieldEntry.create(user: User.all.sample, notes: Faker::Lorem.paragraph, date: Faker::Date.between(from: 14.days.ago, to: Date.today), latitude: (47 + rand) ,longitude: (-122 - rand), bird: Bird.all.sample, share: false)
+    bird = Bird.all.sample
+    field_entry = FieldEntry.create(user: User.all.sample, notes: Faker::Lorem.paragraph, date: Faker::Date.between(from: 14.days.ago, to: Date.today), latitude: (47 + rand) ,longitude: (-122 - rand), bird: bird, share: false)
+    image = Image.create(img_url: bird.img_url, description: Faker::Lorem.sentence)
+    field_entry.images << image
 end
 
-25.times do
-    image = Image.create(img_url: Faker::LoremFlickr.image, description: Faker::Lorem.sentence)
-    FieldEntry.all.sample.images << image
-end
+
+# 25.times do
+#     image = Image.create(img_url: Faker::LoremFlickr.image, description: Faker::Lorem.sentence)
+#     FieldEntry.all.sample.images << image
+# end

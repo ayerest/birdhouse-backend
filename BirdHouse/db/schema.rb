@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_09_003223) do
+ActiveRecord::Schema.define(version: 2019_10_23_002804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,12 @@ ActiveRecord::Schema.define(version: 2019_10_09_003223) do
     t.string "quick_info"
     t.string "img_citation"
     t.string "citation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "factoids", force: :cascade do |t|
+    t.string "fact"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

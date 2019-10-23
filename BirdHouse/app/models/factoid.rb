@@ -1,0 +1,2 @@
+class Factoid < ApplicationRecord
+end

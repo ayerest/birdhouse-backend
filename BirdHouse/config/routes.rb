@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # resources :factoids
   # resources :bird_images
   # resources :badges
   # resources :bird_entries
@@ -21,5 +22,6 @@ Rails.application.routes.draw do
   post '/my_steps', to: 'my_steps#update_steps'
   post '/shared_entries', to: 'shared_entries#get_shared_entries'
   post '/push_token', to: 'push_token#push_token'
+  get '/factoids', to: 'factoids#get_fact'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
