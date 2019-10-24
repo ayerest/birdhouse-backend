@@ -12,18 +12,28 @@ class Bird < ApplicationRecord
     end
 
     def self.get_birds_in_category(category)
-        Bird.all.select do |bird|
+        birds = Bird.all.select do |bird|
             bird.category == category
         end
+        birds = birds.sort_by do |bird|
+            bird.common_name.downcase
+        end
+        return birds
     end
 
     def self.filter_birds(searchTerm)
         by_name = Bird.all.select do |bird|
             bird.common_name.downcase.include?(searchTerm.downcase)
         end
+        by_name = by_name.sort_by do |bird|
+            bird.common_name.downcase
+        end
         by_keyword = Bird.all.select do |bird|
             bird.details.downcase.include?(searchTerm.downcase) || bird.quick_info.downcase.include?(searchTerm.downcase)
-        end.sort
+        end
+        by_keyword = by_keyword.sort_by do |bird|
+            bird.common_name.downcase
+        end
         return by_name + by_keyword
     end
 
