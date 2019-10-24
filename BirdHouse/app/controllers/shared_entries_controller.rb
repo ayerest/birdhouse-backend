@@ -14,7 +14,7 @@ class SharedEntriesController < ApplicationController
                 entry.user != user
             end
             not_mine = not_mine.map do |entry|
-                {bird: {birdcall: entry.bird.birdcall, category: entry.bird.birdcall, common_name: entry.bird.common_name, species_name: entry.bird.species_name, img_url: entry.bird.img_url}, date: entry.date, id: entry.id, images: entry.images, latitude: entry.latitude, longitude: entry.longitude, notes: entry.notes, share: entry.share, uncertain: entry.uncertain}
+                {bird: {birdcall: entry.bird.birdcall, category: entry.bird.birdcall, common_name: entry.bird.common_name, species_name: entry.bird.species_name, img_url: entry.bird.img_url, id: entry.bird.id}, date: entry.date, id: entry.id, images: entry.images, latitude: entry.latitude, longitude: entry.longitude, notes: entry.notes, share: entry.share, uncertain: entry.uncertain}
             end
             render :json => not_mine
         else
