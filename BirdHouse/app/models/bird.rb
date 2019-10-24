@@ -34,6 +34,9 @@ class Bird < ApplicationRecord
         by_keyword = by_keyword.sort_by do |bird|
             bird.common_name.downcase
         end
+        if by_keyword.length > 50
+            by_keyword = by_keyword.slice(0,49)
+        end
         return by_name + by_keyword
     end
 
