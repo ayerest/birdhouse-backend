@@ -6,7 +6,6 @@ class BirdEntriesController < ApplicationController
         birds = birds.map do |bird|
             {common_name: bird.common_name, species_name: bird.species_name, img_url: bird.img_url, id: bird.id, birdcall: bird.birdcall}
         end.uniq
-        # byebug
         render :json => birds
     end
 end

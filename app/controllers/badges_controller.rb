@@ -29,5 +29,4 @@ class BadgesController < ApplicationController
         ##for medal upgrades
     end
 
-    ##don't think there should be a destroy
 end

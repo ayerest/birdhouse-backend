@@ -31,7 +31,6 @@ class UsersController < ApplicationController
     end
 
     def update
-        ##stuff here
     end
 
     private

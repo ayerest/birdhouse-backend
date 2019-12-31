@@ -14,11 +14,6 @@ class ImagesController < ApplicationController
     def new
     end
 
-    # def create
-    #     #stuff goes here
-    # end
-
-    ##no edit/update feature
 
     def show
         image = Image.find(params[:id])

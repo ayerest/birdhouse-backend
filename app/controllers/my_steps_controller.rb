@@ -36,7 +36,6 @@ class MyStepsController < ApplicationController
                 badge.update(medal: "Gold")
             end
         end
-        # byebug
         render :json => {newSteps: steps, totalSteps: user.step_count}
     end
 end

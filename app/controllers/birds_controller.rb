@@ -26,8 +26,6 @@ class BirdsController < ApplicationController
         render :json => bird
     end
 
-    ##shouldn't need other controller actions for birds
-
     private
 
     def get_params
