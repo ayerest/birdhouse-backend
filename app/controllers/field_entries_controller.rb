@@ -15,6 +15,7 @@ class FieldEntriesController < ApplicationController
         field_entry = FieldEntry.create(notes: get_params[:notes], user: user, bird: bird, date: get_params[:date], latitude: get_params[:latitude], longitude: get_params[:longitude], share: get_params[:share])
         if !!params[:image]
             image = Image.create(img_url: params[:image], field_entry: field_entry)
+            user.images << image
         end
         badge_categories = user.badges.map do |badge|
             badge.category
