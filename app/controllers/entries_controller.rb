@@ -3,6 +3,9 @@ class EntriesController < ApplicationController
     def get_my_entries
         user = User.find((params[:user][:id]))
         field_entries = user.field_entries
+        field_entries = field_entries.sort_by do |entry|
+            entry.date
+        end.reverse
         render :json => field_entries
     end
 
