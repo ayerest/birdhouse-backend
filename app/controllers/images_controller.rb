@@ -3,9 +3,9 @@ class ImagesController < ApplicationController
     def get_my_photos
         user = User.find((params[:user][:id]))
         images = user.images
-        images = images.sort_by do |image|
-            image.date
-        end.reverse
+        # images = images.sort_by do |image|
+        #     image.date
+        # end.reverse
         render :json => images
     end
 
